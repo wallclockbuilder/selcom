@@ -19,8 +19,31 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+set your API credentials:
 
+```ruby
+require 'selcom'
+Selcom.configure do |config|
+  config.api_key = '...'
+  config.api_signature = '...'
+end
+```
+Send money:
+
+```ruby
+
+selcom = Selcom::SendMoney.new(:mobile_number => "...", :amount => 500, :telco_id => '...')
+if send_money.send!
+  puts selcom.reference
+  puts selcom.sent_amount
+  puts selcom.success
+  puts selcom.status_code
+  puts selcom.status_description
+else
+  puts selcom.response
+end
+
+```
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/selcom/fork )

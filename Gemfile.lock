@@ -16,7 +16,10 @@ GEM
     diff-lcs (1.2.5)
     i18n (0.6.11)
     json (1.8.1)
+    mini_portile (0.6.0)
     minitest (5.4.2)
+    nokogiri (1.6.3.1)
+      mini_portile (= 0.6.0)
     rake (10.3.2)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
@@ -39,6 +42,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.7)
+  nokogiri
   rake (~> 10.0)
   rspec
   selcom!

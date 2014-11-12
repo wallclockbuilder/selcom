@@ -8,13 +8,19 @@ include ActiveSupport::Configurable
 	class SendMoney
 		attr_accessor :telco_id, :mobile_number, :amount,
 		:response, :reference, :success, :customer_name, :status, :status_description, :status_code
-		
+
 		XMLRPC_URI 				= "https://paypoint.selcommobile.com/api/selcom.pos.server.php"
 		XMLRPC_METHOD 			= 'SELCOM.utilityPayment'
 		AIRTEL_UTILITY_CODE 	= 'AMCASHIN'
 		TIGOPESA_UTILITY_CODE 	= 'TPCASHIN'
 		MPESA_UTILITY_CODE 		= 'VMCASHIN'
 		EZYPESA_UTILITY_CODE 	= 'EZCASHIN'
+		SELCOM_UTILITY_CODES = {
+			:airtel_tz => 'AMCASHIN',
+			:tigo_tz => 'TPCASHIN',
+			:vodacom_tz => 'VMCASHIN',
+			:zantel_tz => 'EZCASHIN'
+		}
 
 		def initialize(args)
 			self.telco_id 			= args[:telco_id]
@@ -74,8 +80,8 @@ include ActiveSupport::Configurable
 			if content_hash
 				content_hash['struct']['member'].map {|member|
 				 	result.store(
-				 		member['name'], 
-				 		member['value'].first[1] 
+				 		member['name'],
+				 		member['value'].first[1]
 				 	)
 				 }
 			end
@@ -96,7 +102,7 @@ include ActiveSupport::Configurable
 			# response_hash = HashWithIndifferentAccess.new(
 			# 	:body => result
 			# 	)
-			
+
 		end
 	end
 end

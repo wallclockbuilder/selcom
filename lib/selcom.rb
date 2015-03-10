@@ -4,7 +4,10 @@ require 'xmlrpc/client'
 require 'nokogiri'
 
 module Selcom
-include ActiveSupport::Configurable
+	include ActiveSupport::Configurable
+	class MalformedRequestError < StandardError
+	end
+
 	class SendMoney
 		attr_accessor :telco_id, :mobile_number, :amount,
 		:response, :reference, :success, :customer_name, :status, :status_description, :status_code
@@ -69,7 +72,13 @@ include ActiveSupport::Configurable
 		 		                        'Content-Type' => 'text/xml; charset=utf-8',
 		 		                        'Accept' => 'text/html'
 		 		                }
-			xmlrpc_server.call(XMLRPC_METHOD, request_params)
+		 	begin
+				xmlrpc_server.call(XMLRPC_METHOD, request_params)
+			rescue RuntimeError => e
+				raise MalformedRequestError, (
+					"Invalid request parameters: #{request_params.inspect}"
+				)
+			end
 			xmlrpc_response = xmlrpc_server.http_last_response.body
 
 			#Parse xml response into ruby object
@@ -86,18 +95,19 @@ include ActiveSupport::Configurable
 				 }
 			end
 
+			# TODO: There's probably some code that should be here.
 
-			Return response as ruby hash
+			# Return response as ruby hash
 
-			response_hash = HashWithIndifferentAccess.new(
-				"body" => {
-					"transid" => "mwliid12345",
-		 			"reference" => "4655259721",
-		 	 		"message" => "Airtel Money Cash-in",
-		 	  		"resultcode" => "000",
-		 	  		"result" => "FAIL"
-				}
-			)
+			# response_hash = HashWithIndifferentAccess.new(
+			# 	"body" => {
+			# 		"transid" => "mwliid12345",
+ 		  # 			"reference" => "4655259721",
+		  # 	 		"message" => "Airtel Money Cash-in",
+		  # 	  		"resultcode" => "000",
+		  # 	  		"result" => "FAIL"
+			# 	}
+			# )
 
 			# response_hash = HashWithIndifferentAccess.new(
 			# 	:body => result

@@ -1,5 +1,6 @@
 require 'active_support'
-require 'active_support/core_ext/hash/indifferent_access.rb'
+require 'active_support/core_ext/hash/conversions'
+require 'active_support/core_ext/hash/indifferent_access'
 require 'xmlrpc/client'
 require 'nokogiri'
 
@@ -36,7 +37,7 @@ module Selcom
     end
 
     def send!
-      self.response = HashWithIndifferentAccess.new(connection(self.to_params).body)
+      self.response = connection(self.to_params)
       self.reference = self.response[:reference]
       self.status = self.response[:result]
       self.status_code = self.response[:resultcode]
@@ -97,24 +98,7 @@ module Selcom
           )
         }
       end
-
-      # TODO: There's probably some code that should be here.
-
-      # Return response as ruby hash
-
-      # response_hash = HashWithIndifferentAccess.new(
-      #   "body" => {
-      #     "transid" => "mwliid12345",
-      #     "reference" => "4655259721",
-      #     "message" => "Airtel Money Cash-in",
-      #     "resultcode" => "000",
-      #     "result" => "FAIL"
-      #   }
-      # )
-
-      # response_hash = HashWithIndifferentAccess.new(
-      #   :body => result
-      # )
+      result
     end
   end
 end

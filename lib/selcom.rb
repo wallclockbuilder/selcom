@@ -29,6 +29,15 @@ module Selcom
       :vodacom_tz => 'VMCASHIN',
       :zantel_tz => 'EZCASHIN'
     }
+    NUMBER_PREFIXES = {
+      '068' => :airtel_tz,
+      '078' => :airtel_tz,
+      '065' => :tigo_tz,
+      '071' => :tigo_tz,
+      '075' => :vodacom_tz,
+      '076' => :vodacom_tz,
+      '077' => :zantel_tz
+    }
 
     def initialize(args)
       self.telco_id = args[:telco_id]
@@ -59,14 +68,15 @@ module Selcom
     def connection(args)
       amount = args["amount"]
       receipient_number = args["mobile_number"]
-      telco_id = args["telco_id"]
+      telco_id = NUMBER_PREFIXES[receipient_number[0..2]] || :vodacom_tz
+      utility_code = SELCOM_UTILITY_CODES[telco_id]
       unique_token = SecureRandom.urlsafe_base64(nil, false)
-      #Make call to xmlrpc server at selcom
+      # Make call to xmlrpc server at selcom
       xmlrpc_server=XMLRPC::Client.new2(XMLRPC_URI)
       request_params = {
         "vendor" => Selcom.config.vendor_id,
         "pin" => Selcom.config.vendor_pin,
-        "utilitycode" => telco_id,
+        "utilitycode" => utility_code,
         "utilityref" => receipient_number,
         "amount" => amount,
         "transid" => unique_token,

@@ -1,4 +1,4 @@
-# Selcom
+# Selcom [![Code Climate](https://codeclimate.com/github/wallclockbuilder/selcom/badges/gpa.svg)](https://codeclimate.com/github/wallclockbuilder/selcom)
 
 This gem makes it possible to use the Selcom API without having to deal with XML RPC.
 ## Installation

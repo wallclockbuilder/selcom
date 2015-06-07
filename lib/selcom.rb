@@ -46,6 +46,7 @@ module Selcom
     def send!
       self.response = make_rpc(self.to_params)
       parse_response(response)
+
       return self.success
     end
 
@@ -65,6 +66,7 @@ module Selcom
       request_params  = create_request_params(args)
       xmlrpc_client   = create_rpc_client()
       xml_response    = call_rpc_server(xmlrpc_client, request_params)
+
       return parse_xml_into_hash(xml_response)
     end
 
@@ -96,6 +98,7 @@ module Selcom
 
     def parse_xml_into_hash(xml_from_rpc)
       xml = extract_xml(xml_from_rpc)
+
       return convert_xml_to_hash(xml)
     end
 

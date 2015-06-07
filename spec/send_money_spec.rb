@@ -10,9 +10,9 @@ describe Selcom::SendMoney do
     })
   }
 
-  it { expect(subject.telco_id).to     eql('abc') }
+  it { expect(subject.telco_id).to        eql('abc') }
   it { expect(subject.mobile_number).to   eql('+255701234567') }
-  it { expect(subject.amount).to       eql('543') }
+  it { expect(subject.amount).to          eql('543') }
 
   it { should respond_to(:telco_id) }
   it { should respond_to(:mobile_number) }
@@ -78,10 +78,10 @@ describe Selcom::SendMoney do
       before { subject.should_receive(:connection).with(subject.to_params).and_return(response) }
       it 'parses the response and sets accessors' do
         subject.send!
-        expect(subject.status).to eql ("FAIL")
-        expect(subject.status_code).to eql("000")
+        expect(subject.status).to             eql("FAIL")
+        expect(subject.status_code).to        eql("000")
         expect(subject.status_description).to eql('Airtel Money Cash-in')
-        expect(subject.success).to eql(false)
+        expect(subject.success).to            eql(false)
       end
     end
 
@@ -106,11 +106,11 @@ describe Selcom::SendMoney do
 
       it 'parses the response and sets accessors' do
         subject.send!
-        expect(subject.reference).to eql('4655259721')
-        expect(subject.status).to eql("SUCCESS")
-        expect(subject.status_code).to eql('000')
-        expect(subject.status_description).to eql("Airtel Money Cash-in")
-        expect(subject.success).to eql(true)
+        expect(subject.reference).to            eql('4655259721')
+        expect(subject.status).to               eql("SUCCESS")
+        expect(subject.status_code).to          eql('000')
+        expect(subject.status_description).to   eql("Airtel Money Cash-in")
+        expect(subject.success).to              eql(true)
       end
     end
   end

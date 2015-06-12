@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["mawuli.kofi.mawuli@gmail.com"]
   spec.summary       = %q{Ruby API wrapper for the Selcom XMLRPC API}
   spec.description   = %q{Use this gem so you don't have to interact with the Selcome XML RPC API directly.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/wallclockbuilder/selcom"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
